@@ -1,19 +1,14 @@
 import pandas as pd
 import numpy as np
-
 import dash
 dash.__version__
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output,State
-
 import plotly.graph_objects as go
-
 import os
 print(os.getcwd())
 df_input_large=pd.read_csv('data/processed/COVID_final_set.csv',sep=';')
-
-
 fig = go.Figure()
 
 app = dash.Dash()
@@ -26,13 +21,11 @@ app.layout = html.Div([
     it covers the full walkthrough of: automated data gathering, data transformations,
     filtering and machine learning to approximating the doubling time, and
     (static) deployment of responsive dashboard.
-
     '''),
 
     dcc.Markdown('''
     ## Multi-Select Country for visualization
     '''),
-
 
     dcc.Dropdown(
         id='country_drop_down',
@@ -44,7 +37,6 @@ app.layout = html.Div([
     dcc.Markdown('''
         ## Select Timeline of confirmed COVID-19 cases or the approximated doubling time
         '''),
-
 
     dcc.Dropdown(
     id='doubling_time',
@@ -62,13 +54,11 @@ app.layout = html.Div([
 ])
 
 
-
 @app.callback(
     Output('main_window_slope', 'figure'),
     [Input('country_drop_down', 'value'),
     Input('doubling_time', 'value')])
 def update_figure(country_list,show_doubling):
-
 
     if 'doubling_rate' in show_doubling:
         my_yaxis={'type':"log",
@@ -79,18 +69,14 @@ def update_figure(country_list,show_doubling):
                   'title':'Confirmed infected people (source johns hopkins csse, log-scale)'
               }
 
-
     traces = []
     for each in country_list:
-
         df_plot=df_input_large[df_input_large['country']==each]
-
         if show_doubling=='doubling_rate_filtered':
             df_plot=df_plot[['state','country','confirmed','confirmed_filtered','confirmed_DR','confirmed_filtered_DR','date']].groupby(['country','date']).agg(np.mean).reset_index()
         else:
             df_plot=df_plot[['state','country','confirmed','confirmed_filtered','confirmed_DR','confirmed_filtered_DR','date']].groupby(['country','date']).agg(np.sum).reset_index()
        #print(show_doubling)
-
 
         traces.append(dict(x=df_plot.date,
                                 y=df_plot[show_doubling],
@@ -105,7 +91,6 @@ def update_figure(country_list,show_doubling):
             'layout': dict (
                 width=1280,
                 height=720,
-
                 xaxis={'title':'Timeline',
                         'tickangle':-45,
                         'nticks':20,
@@ -117,5 +102,4 @@ def update_figure(country_list,show_doubling):
     }
 
 if __name__ == '__main__':
-
     app.run_server(debug=True, use_reloader=False, port=8050)

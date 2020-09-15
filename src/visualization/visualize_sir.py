@@ -1,14 +1,11 @@
 import pandas as pd
 import numpy as np
-
 import dash
 dash.__version__
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output,State
-
 import plotly.graph_objects as go
-
 import os
 print(os.getcwd())
 
@@ -21,7 +18,7 @@ app.layout = html.Div([
     #  Task 2 of the Applied Data Science project on the COVID-19 data
 
     Here we will be able to select and control the following SIR parameters and be able to adjust the graph according to our requirements.
-    It is a full walkthrough of the SIR model.
+    It is a full walkthrough of the SIR model. The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
     '''),
 
     dcc.Markdown('''
@@ -33,7 +30,7 @@ app.layout = html.Div([
     dcc.Dropdown(
         id='country_drop_down',
         options=[ {'label': each,'value':each} for each in df_ip_big['country'].unique()],
-        value=['US'], # which are pre-selected
+        value=['US'], # which have been selected already here and will be available for immediate access once opened
         multi=True
     ),
 
@@ -43,7 +40,7 @@ app.layout = html.Div([
 
     dcc.Markdown('''
     ## Starting period(in Days)
-    '''),
+    '''), #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
     dcc.Input(
             id="t_start", type="number", placeholder="number",
             value=7,min=0, max=1000,
@@ -52,7 +49,7 @@ app.layout = html.Div([
 
      dcc.Markdown('''
     ## Intro period(in Days)
-    '''),
+    '''), #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
     dcc.Input(
             id="t_intr", type="number", placeholder="number",
             value=40,min=0, max=1000,
@@ -61,7 +58,7 @@ app.layout = html.Div([
 
      dcc.Markdown('''
     ## Hold period(in Days)
-    '''),
+    '''), #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
     dcc.Input(
             id="t_halt", type="number", placeholder="number",
             value=43,min=0, max=1000,
@@ -70,7 +67,7 @@ app.layout = html.Div([
 
      dcc.Markdown('''
     ## Relaxing period(in Days)
-    '''),
+    '''), #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
     dcc.Input(
             id="t_relx", type="number", placeholder="number",
             value=70,min=0, max=1000,
@@ -79,7 +76,7 @@ app.layout = html.Div([
 
      dcc.Markdown('''
     ## Max infection rate
-    '''),
+    '''), #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
      dcc.Input(
              id="b_max", type="number", placeholder="number",
              value=0.35,min=0, max=100,
@@ -89,7 +86,7 @@ app.layout = html.Div([
 
      dcc.Markdown('''
     ## Min infection rate
-    '''),
+    '''), #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
      dcc.Input(
              id="b_min", type="number", placeholder="number",
              value=0.13,min=0, max=100,
@@ -98,7 +95,7 @@ app.layout = html.Div([
 
      dcc.Markdown('''
     ## Recovering rate
-    '''),
+    '''), #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
      dcc.Input(
              id="gamma", type="number", placeholder="number",
              value=0.09,min=0, max=100,
@@ -108,7 +105,7 @@ app.layout = html.Div([
     dcc.Graph(figure=fig, id='main_window_slope')
 ])
 
-@app.callback(
+@app.callback( #The following SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
     Output('main_window_slope', 'figure'),
     [Input('country_drop_down', 'value'),
     Input('t_start', component_property='value'),
@@ -157,7 +154,7 @@ def update_figure(country_list,t_start,t_intr,t_halt,t_relx,bmax,bmin,gamma):
 
         SIR=np.array([S0,I0,R0])
 
-
+        #The SIR parameters are used to control the graph line (infected line) in the dynamic beta programming.
         propagation_rates=pd.DataFrame(columns={'susceptible':S0,
                                             'infected':I0,
                                             'recoverd':R0})

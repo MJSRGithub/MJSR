@@ -9,21 +9,15 @@ import matplotlib.pyplot as plt
 
 def SIR_model(SIR,beta,gamma,N0):
     '''Here's the simple SIR model
-        S - susceptible population
-        I - infected population
-        R - recovered population
-        beta - infection rate
-        gamma - recovery rate
-        N0 - Total population
+        S - susceptible population; I - infected population; R - recovered population
+        beta - infection rate; gamma - recovery rate; N0 - Total population
         And then the overall condition is as below
         overall condition is that the sum of changes (differnces) sum up to 0
         dS+dI+dR=0
         S+I+R= N (constant size of population)
 
-     Parameters:
-        SIR - numpy.ndarray
-        beta - float
-        gamma - float
+     Parameters are:
+        SIR - numpy.ndarray; beta - float; gamma - float
     '''
 
     S,I,R = SIR
