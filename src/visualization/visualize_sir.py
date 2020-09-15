@@ -186,7 +186,7 @@ def update_figure(country_list,t_start,t_intr,t_halt,t_relx,bmax,bmin,gamma):
                         'layout': dict (
                             width=1280,
                             height=720,
-                            title= 'Scenario SIR simulations  (demonstration purposes only)',
+                            title= 'SIR simulations scenario',
 
                             xaxis={'title':'Time in days',
                                     #'tickangle':-45,
